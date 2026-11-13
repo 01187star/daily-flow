@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10141d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DAILY FLOW">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+<title>DAILY FLOW</title>
+</head>
+<body>
+<header class="top">
+  <div><div class="brand">DAILY FLOW</div><div class="sub">PERSONAL DAILY TASK MANAGER</div></div>
+  <img src="icons/icon-192.png" alt="" class="brand-icon">
+</header>
+<main>
+  <section class="date-card panel">
+    <label for="date">日付フォルダー</label>
+    <input id="date" type="date">
+    <div class="date-title" id="dateTitle"></div>
+  </section>
+  <section class="panel">
+    <label for="assignee">担当</label>
+    <input id="assignee" type="text" placeholder="担当者名を自由入力">
+  </section>
+  <section class="progress panel">
+    <div class="progress-head"><div><div class="eyebrow">DAILY PROGRESS</div><strong>業務の進捗</strong></div><div class="count" id="count">0 / 0</div></div>
+    <div class="bar"><span id="barFill"></span></div>
+    <div class="progress-foot"><span id="percent">完了 0%</span><span id="remaining">残り 0 件</span></div>
+  </section>
+  <section id="completeBanner" class="complete-banner hidden"><span class="seal">✓</span><div><strong>本日の業務は完了！</strong><small>今日もお疲れさまでした。</small></div></section>
+  <div class="section-head"><h2>当日のスケジュール</h2><span id="taskCount">0 TASKS</span></div>
+  <section id="tasks" class="tasks"></section>
+  <section class="actions">
+    <button class="primary" id="addTask">＋ タスクを追加</button>
+    <button id="openTemplates">▤ テンプレートを使う・管理</button>
+    <button id="saveTemplate">▣ この日のタスクをテンプレート保存</button>
+    <button id="markAll">✓ すべて完了にする</button>
+    <button class="reset" id="resetAll">↶ すべて未完了に戻す</button>
+  </section>
+  <p class="foot">データはこのブラウザ内に保存されます。通知機能はありません。</p>
+</main>
+
+<dialog id="taskDialog">
+  <form method="dialog" id="taskForm">
+    <div class="dialog-head"><h2 id="taskDialogTitle">タスクを追加</h2><button type="button" class="close" data-close="taskDialog">×</button></div>
+    <label>作業内容<input id="taskTitle" required maxlength="120" placeholder="例：メール・連絡事項の確認"></label>
+    <label>表示する時間<input id="taskTime" type="time" value="09:00" required></label>
+    <div class="checkline"><input id="hasDeadline" type="checkbox"><label for="hasDeadline">目標終了時間を記録する（通知なし）</label></div>
+    <label id="deadlineWrap" class="hidden">目標終了時間<input id="taskDeadline" type="time" value="10:00"></label>
+    <div class="dialog-actions"><button type="button" data-close="taskDialog">キャンセル</button><button class="primary" type="submit">保存</button></div>
+  </form>
+</dialog>
+
+<dialog id="templateDialog">
+  <div class="dialog-head"><h2>テンプレート</h2><button type="button" class="close" data-close="templateDialog">×</button></div>
+  <div class="template-mode"><label class="checkline"><input id="replaceMode" type="checkbox" checked> 適用時に既存タスクを置き換える</label><small id="modeHelp">ON：この日のタスクを置き換えます。</small></div>
+  <div id="templateList"></div>
+  <div class="dialog-actions"><button data-close="templateDialog">閉じる</button></div>
+</dialog>
+
+<dialog id="saveTemplateDialog">
+  <form method="dialog" id="saveTemplateForm">
+    <div class="dialog-head"><h2>テンプレートを保存</h2><button type="button" class="close" data-close="saveTemplateDialog">×</button></div>
+    <label>テンプレート名<input id="templateName" required maxlength="60" placeholder="例：通常勤務"></label>
+    <p class="hint">この日のタスク名・時間・目標終了時間を保存します。担当者と完了状態は保存しません。</p>
+    <div class="dialog-actions"><button type="button" data-close="saveTemplateDialog">キャンセル</button><button class="primary" type="submit">保存</button></div>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body>
+</html>
